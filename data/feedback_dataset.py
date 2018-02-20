@@ -1,23 +1,29 @@
 import os.path
+import pathlib
 from data.base_dataset import BaseDataset, get_transform
 from data.image_folder import make_dataset
 from PIL import Image
 import random
 
 
-class SequentialDataset(BaseDataset):
+class FeedbackDataset(BaseDataset):
     def initialize(self, opt):
         self.opt = opt
-        self.root = opt.dataroot
-        self.dir_AB = os.path.join(opt.dataroot, opt.phase)
+        self.root = pathlib.Path(opt.dataroot)
+        self.dir_AB = self.root / opt.phase
 
-        self.AB_paths = sorted(make_dataset(self.dir_AB))
-        self.AB_size = len(self.AB_paths) // - 1
+        # self.AB_paths = sorted(make_dataset(self.dir_AB))
+        self.AB_size = 100
         self.transform = get_transform(opt)
 
     def __getitem__(self, index):
-        A_path = self.AB_paths[index // 4]
-        B_path = self.AB_paths[index // 4 + 1]
+
+        A_path = self.path_for_index(index)
+        A_path = str(A_path)
+        B_path = A_path
+
+        # A_path = self.AB_paths[index]
+        # B_path = self.AB_paths[index + 1]
 
         # print('(A, B) = (%d, %d)' % (index_A, index_B))
         A_img = Image.open(A_path).convert('RGB')
@@ -46,5 +52,8 @@ class SequentialDataset(BaseDataset):
     def __len__(self):
         return self.AB_size
 
+    def path_for_index(self, index):
+        return self.dir_AB / f'{str(index).zfill(4)}.png'
+    
     def name(self):
-        return 'SequentialDataset'
+        return 'FeedbackDataset'
