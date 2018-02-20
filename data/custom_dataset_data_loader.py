@@ -16,6 +16,9 @@ def CreateDataset(opt):
     elif opt.dataset_mode == 'sequential':
         from data.sequential_dataset import SequentialDataset
         dataset = SequentialDataset()
+    elif opt.dataset_mode == 'feedback':
+        from data.feedback_dataset import FeedbackDataset
+        dataset = FeedbackDataset()
     else:
         raise ValueError("Dataset [%s] not recognized." % opt.dataset_mode)
 
