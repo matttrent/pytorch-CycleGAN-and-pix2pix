@@ -20,9 +20,11 @@ model = create_model(opt)
 visualizer = Visualizer(opt)
 
 
-for i, data in enumerate(dataset):
+for i, data in enumerate(dataset.dataset):
     if i >= opt.how_many:
         break
+    data['A'] = data['A'].unsqueeze(0)
+    data['B'] = data['B'].unsqueeze(0)
     model.set_input(data)
     model.test()
     visuals = model.get_current_visuals()
