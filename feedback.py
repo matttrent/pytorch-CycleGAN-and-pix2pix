@@ -8,6 +8,7 @@ from util import html
 from util.util import save_image
 
 opt = TestOptions().parse()
+opt.phase = 'feedback'
 opt.nThreads = 1   # test code only supports nThreads = 1
 opt.batchSize = 1  # test code only supports batchSize = 1
 opt.serial_batches = True  # no shuffle
@@ -26,5 +27,5 @@ for i, data in enumerate(dataset):
     model.test()
     visuals = model.get_current_visuals()
 
-    save_path = dataset.path_for_index(i + 1)
+    save_path = dataset.dataset.path_for_index(i + 1)
     save_image(visuals['fake_B'], save_path)
