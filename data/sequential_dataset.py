@@ -12,7 +12,7 @@ class SequentialDataset(BaseDataset):
         self.dir_AB = os.path.join(opt.dataroot, opt.phase)
 
         self.AB_paths = sorted(make_dataset(self.dir_AB))
-        self.AB_size = len(self.AB_paths) // - 1
+        self.AB_size = len(self.AB_paths) // 4 - 1
         self.transform = get_transform(opt)
 
     def __getitem__(self, index):

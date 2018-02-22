@@ -1,13 +1,13 @@
 import os
 import pathlib
-from options.test_options import TestOptions
+from options.feedback_options import FeedbackOptions
 from data.data_loader import CreateDataLoader
 from models.models import create_model
 from util.visualizer import Visualizer
 from util import html
 from util.util import save_image
 
-opt = TestOptions().parse()
+opt = FeedbackOptions().parse()
 opt.phase = 'feedback'
 opt.nThreads = 1   # test code only supports nThreads = 1
 opt.batchSize = 1  # test code only supports batchSize = 1

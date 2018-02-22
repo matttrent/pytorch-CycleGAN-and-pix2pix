@@ -10,7 +10,7 @@ class FeedbackDataset(BaseDataset):
     def initialize(self, opt):
         self.opt = opt
         self.root = pathlib.Path(opt.dataroot)
-        self.dir_AB = self.root / opt.phase
+        self.dir_AB = self.root / opt.phase / opt.subdir
 
         # self.AB_paths = sorted(make_dataset(self.dir_AB))
         self.AB_size = 100
