@@ -5,6 +5,9 @@ from PIL import Image
 import random
 
 
+SKIP_SIZE = 1
+
+
 class SequentialDataset(BaseDataset):
     def initialize(self, opt):
         self.opt = opt
@@ -12,12 +15,12 @@ class SequentialDataset(BaseDataset):
         self.dir_AB = os.path.join(opt.dataroot, opt.phase)
 
         self.AB_paths = sorted(make_dataset(self.dir_AB))
-        self.AB_size = len(self.AB_paths) // 4 - 1
+        self.AB_size = len(self.AB_paths) // SKIP_SIZE - 1
         self.transform = get_transform(opt)
 
     def __getitem__(self, index):
-        A_path = self.AB_paths[index // 4]
-        B_path = self.AB_paths[index // 4 + 1]
+        A_path = self.AB_paths[index // SKIP_SIZE]
+        B_path = self.AB_paths[index // SKIP_SIZE + 1]
 
         # print('(A, B) = (%d, %d)' % (index_A, index_B))
         A_img = Image.open(A_path).convert('RGB')
